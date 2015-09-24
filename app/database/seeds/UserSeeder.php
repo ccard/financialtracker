@@ -22,9 +22,13 @@ class UserSeeder extends Seeder {
 		$user->firstname = 'Chris';
 		$user->lastname = 'Card';
 		$user->privilage()->associate($privilage);
+		$user->password = Hash::make('password'); //If you think this wont change your wrong;
 		if($user->save())
 		{
 			$this->command->info('User Success');
+			if($user->isAdmin()){
+				$this->command->info('User Success admin');
+			}
 		}
 		} catch(Exception $e){
 			$this->command->error('Error: '.$e->getMessage());

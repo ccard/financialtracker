@@ -58,7 +58,7 @@ return array(
 	|
 	*/
 
-	'reminder' => array(
+	/*'reminder' => array(
 
 		'email' => 'emails.auth.reminder',
 
@@ -66,6 +66,6 @@ return array(
 
 		'expire' => 60,
 
-	),
+	),*/
 
 );

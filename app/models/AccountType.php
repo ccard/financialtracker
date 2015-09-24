@@ -5,7 +5,7 @@
 */
 class AccountType extends Eloquent
 {
-	protected $fillable = array('name');
+	protected $fillable = array('name','isbudget');
 	public $timestamps=false;
 	protected $table="accounttype";
 

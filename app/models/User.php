@@ -35,6 +35,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->password;
 	}
 
+	public function isAdmin(){
+		if($this->privilage()->name == 'Admin'){
+			return true;
+		}
+		return false;
+	}
+
 	public function privilage(){
 		return $this->belongsTo('Privilages');
 	}

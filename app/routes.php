@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\MessageBag;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -13,5 +13,15 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	return Redirect::to('home');
+});
+
+Route::get('home', function(){
+	//dd('test');
+	return View::make('PrimaryPages.home');
+});
+
+Route::group(array('before'=>'auth'), function(){
+
+
 });

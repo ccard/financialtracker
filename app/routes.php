@@ -20,7 +20,8 @@ Route::get('home', function(){
 	//dd('test');
 	if(Auth::check() && Auth::user()->isAdmin()){
 		$users = User::where('privilage_id','!=',Auth::user()->privilage_id)->get();
-		return View::make('PrimaryPages.adminhome')->with('users',$users);
+		$privs = Privilages::all();
+		return View::make('PrimaryPages.adminhome')->with('users',$users)->with('privs',$privs);
 	}
 	return View::make('PrimaryPages.home');
 });
@@ -47,4 +48,12 @@ Route::group(array('before'=>'auth'), function(){
 	Route::get('home/admin/user/add','Adminfunctions@loadAddUser');
 
 	Route::post('home/admin/user/add','Adminfunctions@addUser');
+
+	Route::get('home/admin/privilage/add','Adminfunctions@loadAddPriv');
+
+	Route::post('home/admin/privilage/add','Adminfunctions@addPriv');
+
+	Route::get('home/admin/user/{action}/{id}','Adminfunctions@loadEditDeleteUser');
+
+	Route::post('home/admin/user/{action}/{id}','Adminfunctions@editDeleteUser');
 });

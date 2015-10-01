@@ -22,8 +22,11 @@ Route::get('home', function(){
 		$users = User::where('privilage_id','!=',Auth::user()->privilage_id)->get();
 		$privs = Privilages::all();
 		return View::make('PrimaryPages.adminhome')->with('users',$users)->with('privs',$privs);
+	} else if (Auth::check()) {
+		$user= Auth::user();
+		return View::make('PrimaryPages.home')->with('user',$user);	
 	}
-	return View::make('PrimaryPages.home');
+	return View::make('PrimaryPages.home')->with('user',array("none"=>"none"));
 });
 
 Route::post('home', function(){
@@ -56,4 +59,8 @@ Route::group(array('before'=>'auth'), function(){
 	Route::get('home/admin/user/{action}/{id}','Adminfunctions@loadEditDeleteUser');
 
 	Route::post('home/admin/user/{action}/{id}','Adminfunctions@editDeleteUser');
+
+	Route::get('home/user/settings',function(){
+
+	});
 });

@@ -12,3 +12,23 @@ class UserAccountfunctions extends BaseController {
 		|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
+
+	public function loadPage()
+	{
+		$accounttypes = AccountType::all();
+		$hasaccounttypes = count($accounttypes);
+
+		$user = Auth::user();
+		return View::make('PrimaryPages.accounts')->with('hasaccounttypes',$hasaccounttypes)->with('user',$user);
+	}
+
+	public function loadAddAccountType()
+	{
+		return View::make('Modals.addaccounttype')->render();
+	}
+
+	public function addAccountType()
+	{
+		dd('ACccount type');
+	}
+}

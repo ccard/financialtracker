@@ -26,6 +26,7 @@
 		}
 		</style>
 		@else
+		@yield('addheaddata')
 		<script type="text/javascript">
 		$(document).ready(function(){
 					@yield('script')
@@ -36,9 +37,6 @@
 	<body>
 		<div class="container-fliud">
 			<div class="page-header" style="padding-left:15%; width: 90%; margin: 0 auto; background-image: url('http://www.franchiseopportunitiesjournal.com/wp-content/uploads/2013/11/bigstock-Business-Graph-Output-Growth-O-38917468.jpg'); background-repeat: no-repeat; background-position: center; background-size: 50% 100%;">
-				@if(Auth::check())
-				@yield('backButton')
-				@endif
 				<h1 style="height: 50px">Financial Tracker</small>
 				</h1>
 			</div>
@@ -58,17 +56,18 @@
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						@if(Auth::check())
 						<a href="#" class="dropdown-toggle navbar-btn btn btn-primary btn-link" data-toggle="dropdown"><b class="glyphicon glyphicon-menu-hamburger"></b></a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu" style="left:auto">
 							@if(Auth::user()->isAdmin())
 							<!-- put admin menu here if needed-->
 							@else
-							<li><a href="#"><b class="glyphicon glyphicon-menu-hamburger"></b></a></li>
-							<li><a href="#"><b class="glyphicon glyphicon-menu-hamburger"></b></a></li>
+							<li><a href="{{{ url('home/accounts') }}}"><b class="glyphicon glyphicon-briefcase"></b> Accounts</a></li>
+							<li><a href="{{{ url('home/transactions') }}}"><b class="glyphicon glyphicon-shopping-cart"></b> Transactions</a></li>
 							<li><a href="#"><b class="glyphicon glyphicon-menu-hamburger"></b></a></li>
 							<li><a href="#"><b class="glyphicon glyphicon-menu-hamburger"></b></a></li>
 							@endif
 							@yield('addmenueitems')
 						</ul>
+						@yield('navbaritems')
 						@endif
 						@if(!Auth::check())
 						<a href="#" class="login-popover btn btn-primary btn-link pull-right navbar-btn" valign="middle">Login</a>

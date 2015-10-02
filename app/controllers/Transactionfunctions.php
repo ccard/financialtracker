@@ -12,3 +12,13 @@ class Transactionfunctions extends BaseController {
 		|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
+
+	public function loadPage() {
+		dd('hi');
+	}
+
+	public function loadAddTrans($style){
+		dd('test');
+	}
+
+}

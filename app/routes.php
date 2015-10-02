@@ -63,4 +63,15 @@ Route::group(array('before'=>'auth'), function(){
 	Route::get('home/user/settings',function(){
 
 	});
+
+	Route::get('home/accounts','UserAccountfunctions@loadPage');
+
+	Route::get('home/accounts/addaccounttype','UserAccountfunctions@loadAddAccountType');
+
+	Route::post('home/accounts/addaccounttype','UserAccountfunctions@addAccountType');
+
+	Route::get('home/transactions','Transactionfunctions@loadPage');
+
+	Route::get('home/transactions/add/{style}','Transactionfunctions@loadAddTrans');
+
 });

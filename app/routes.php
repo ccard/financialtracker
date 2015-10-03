@@ -33,7 +33,7 @@ Route::post('home', function(){
 	if(Auth::check()){
 		return Redirect::to('home');
 	} else {
-		if(Auth::attempt(Input::only('username','password'),true)){
+		if(Auth::attempt(Input::only('username','password'),(Input::get('remember') === 'true'?true:false))){
 			return Redirect::intended('home')->with('message',"Logged in!");
 		} else {
 			return Redirect::to('home')->with('error',"Invalid Credentials!");
@@ -69,6 +69,10 @@ Route::group(array('before'=>'auth'), function(){
 	Route::get('home/accounts/addaccounttype','UserAccountfunctions@loadAddAccountType');
 
 	Route::post('home/accounts/addaccounttype','UserAccountfunctions@addAccountType');
+
+	Route::get('home/accounts/addaccount','UserAccountfunctions@loadAddAccount');
+
+	Route::post('home/accounts/addaccount','UserAccountfunctions@addAccount');
 
 	Route::get('home/transactions','Transactionfunctions@loadPage');
 

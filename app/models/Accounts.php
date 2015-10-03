@@ -5,7 +5,7 @@
 */
 class Accounts extends Eloquent
 {
-	protected $fillable = array('user_id','account_type_id','institution','balance','active','description','accountname','amountagainst');
+	protected $fillable = array('user_id','account_type_id','institution','balance','active','discription','accountname','amountagainst');
 	public $timestamps = false;
 	protected $table = "accounts";
 

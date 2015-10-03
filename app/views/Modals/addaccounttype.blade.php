@@ -10,7 +10,7 @@ Add Account Type
 			{{ Form::label('Account type',null,array("class"=>"control-label col-sm-3")) }}
 			<div class="col-sm-7">
 				{{ Form::text('accounttype',null,array("class"=>"form-control",0=>'required'))}}
-				{{ Form::checkbox('isbuget','value',false)}} {{ Form::label('Is Budget',null,array("class"=>"control-label")) }}
+				{{ Form::checkbox('isbudget','true',false)}} {{ Form::label('Is Budget',null,array("class"=>"control-label")) }}
 			</div>
 		</div>
 	</div>

@@ -5,11 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddUsersAndTranstypeAndTransactionsAndStoreAndPrivilagesAndAccounttypeAndAccounts extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
 		Schema::create('privilages',function($table){
@@ -40,7 +35,7 @@ class AddUsersAndTranstypeAndTransactionsAndStoreAndPrivilagesAndAccounttypeAndA
 			$table->string('institution');
 			$table->double('balance',20,2)->default(0.0);
 			$table->boolean('active')->default(true);
-			$table->string('description');
+			$table->string('discription');
 			$table->string('accountname');
 			$table->double('amountagainst',20,2)->default(0.0);
 		});

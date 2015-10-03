@@ -29,6 +29,50 @@ class UserAccountfunctions extends BaseController {
 
 	public function addAccountType()
 	{
-		dd('ACccount type');
+		if(empty(AccountType::where('name',Input::get('accounttype'))->first())){
+			$at = new AccountType;
+			$at->name = Input::get('accounttype');
+			$at->isbudget = (Input::get('isbudget')==='true'?true:false);
+			if($at->save()){
+				return Redirect::back()->with('message','New account type saved!');
+			}
+		} else {
+			return Redirect::back()->with('error','Account type already exists');
+		}
+	}
+
+	public function loadAddAccount()
+	{
+		$actypes = AccountType::all();
+		$actypeoptions = array_combine($actypes->lists('id'), $actypes->lists('name'));
+		return View::make('Modals.addaccount')->with('actypeoptions',$actypeoptions)->render();
+	}
+
+	public function addAccount()
+	{
+		if(!is_numeric(Input::get('balance'))){
+			return Redirect::back()->with('error',"The balance must be a number you idiot!");
+		}
+
+		try {
+			$user = Auth::user();
+				$actype = AccountType::find(intval(Input::get('accounttype_id')));
+				$account = new Accounts;
+				$account->accountType()->associate($actype);
+				$account->user()->associate($user);
+				$account->institution = Input::get('institution');
+				$account->balance = doubleval(Input::get('balance'));
+				$account->discription = Input::get('discription');
+				$account->accountname = Input::get('accountname');
+				$account->active = true;
+				$account->amountagainst = 0.0;
+				if($account->save()){
+					return Redirect::back()->with('message','Your new account is created');
+				} else {
+					return Redirect::back()->with('error','Failed to create your new account!!');
+				}
+		} catch (Exception $e) {
+			dd('Failed to create! '.$e->getMessage());
+		}
 	}
 }

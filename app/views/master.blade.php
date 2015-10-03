@@ -73,7 +73,7 @@
 						<a href="#" class="login-popover btn btn-primary btn-link pull-right navbar-btn" valign="middle">Login</a>
 						<div class="popover" id="login-popover-container">
 							<div id="login-popover-head" class="popover-title">Please Login</div>
-							<div id="login-popover-content" class="popover-content" style="width: 400px">
+							<div id="login-popover-content" class="popover-content" style="height:600px; width: 600px">
 								{{ Form::open() }}
 								<div class="form-horizontal" style="width: 100%">
 									<div >
@@ -82,8 +82,11 @@
 									<div>
 										{{ Form::password('password', array('placeholder' => 'password',"class"=>"form-control", 0=>'required',"style"=>"margin-top:5px")) }}
 									</div>
-									<div class="form-group text-center">
-										{{ Form::submit("Login" , array("class"=>"btn btn-primary", "style"=>"margin-top: 5px")) }}
+									<div class="text-center">
+										{{ Form::checkbox('remember','true',false)}}{{Form::label(' Remember',null,array("class"=>"control-label"))}}
+									</div>
+									<div class="text-center">
+										{{ Form::submit("Login" , array("class"=>"btn btn-primary", "style"=>"margin-top: 5px; height: 25px")) }}
 									</div>
 									{{ Form::close() }}
 								</div>

@@ -32,7 +32,7 @@ class AddUsersAndTranstypeAndTransactionsAndStoreAndPrivilagesAndAccounttypeAndA
 			$table->integer('user_id');
 			$table->index('user_id');
 			$table->integer('account_type_id');
-			$table->string('institution');
+			$table->integer('store_id');
 			$table->double('balance',20,2)->default(0.0);
 			$table->boolean('active')->default(true);
 			$table->string('discription');

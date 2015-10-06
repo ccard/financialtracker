@@ -16,7 +16,7 @@ $('.modal_account_btn').on('click',function(){
 			});
 		});
 	} else {
-		$.get("{{{ $_SERVER['REQUEST_URI']}}}"+'/accounts/'+this_action+'/'+this_id, function(data){
+		$.get("{{{ $_SERVER['REQUEST_URI']}}}"+'/'+this_action+'/'+this_id, function(data){
 			$('#modalwindow').modal();
 			$('#modalwindow').on('shown.bs.modal', function(){
 				$('#modalwindow .load_modal').html(data);
@@ -65,9 +65,9 @@ $('.currency').blur(function(){
 					@foreach($user->accounts as $account)
 						<tr>
 							<td>{{{$account->accounttype->name}}}</td>
-							<td>{{{$account->institution}}}</td>
+							<td>{{{$account->store->name}}}</td>
 							<td>{{{$account->accountname}}}</td>
-							<td>{{{$account->description}}}</td>
+							<td>{{{$account->discription}}}</td>
 							<td><b class="glyphicon glyphicon-usd"></b>{{{$account->balance}}}</td>
 							<td style="color:red">-<b class="glyphicon glyphicon-usd"></b>{{{$account->amountagainst}}}</td>
 							<td> 

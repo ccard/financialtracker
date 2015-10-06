@@ -5,7 +5,7 @@
 */
 class Accounts extends Eloquent
 {
-	protected $fillable = array('user_id','account_type_id','institution','balance','active','discription','accountname','amountagainst');
+	protected $fillable = array('user_id','account_type_id','store_id','balance','active','discription','accountname','amountagainst');
 	public $timestamps = false;
 	protected $table = "accounts";
 
@@ -19,6 +19,11 @@ class Accounts extends Eloquent
 
 	public function transactions(){
 		return $this->hasMany('Transactions');
+	}
+
+	public function store()
+	{
+		return $this->belongsTo('Store');
 	}
 }
 ?>

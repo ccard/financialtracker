@@ -74,6 +74,10 @@ Route::group(array('before'=>'auth'), function(){
 
 	Route::post('home/accounts/addaccount','UserAccountfunctions@addAccount');
 
+	Route::get('home/accounts/{action}/{id}','UserAccountfunctions@loadEditDeleteAccount');
+
+	Route::post('home/accounts/{action}/{id}','UserAccountfunctions@editDeleteAccount');
+
 	Route::get('home/transactions','Transactionfunctions@loadPage');
 
 	Route::get('home/transactions/add/{style}','Transactionfunctions@loadAddTrans');

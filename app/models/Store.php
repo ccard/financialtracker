@@ -12,5 +12,9 @@ class Store extends Eloquent
 	public function transactions(){
 		return $this->hasMany('Transactions');
 	}
+
+	public function accounts(){
+		return $this->hasMany('Accounts');
+	}
 }
 ?>

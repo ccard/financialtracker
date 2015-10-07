@@ -38,7 +38,7 @@ $('.currency').blur(function(){
 @stop
 @section('content')
 @if(Auth::check())
-<div class="panel panel-default" style="padding-left: 5px;float: left; margin-right: 15px; min-width: 100px; min-height: 100px">
+<div class="panel panel-default" style="padding-left: 5px;float: left; margin: 15px; min-width: 100px; min-height: 100px">
 	<div class="panel-header">
 	<h2 style="float: left">Accounts</h2>
 	@if($hasaccounttypes)
@@ -56,6 +56,56 @@ $('.currency').blur(function(){
 						<th>Account name</th>
 						<th>Description</th>
 						<th>Balance</th>
+						<th>Active</th>
+						<th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($user->accounts as $account)
+						@if(!$account->accounttype->isbudget)
+						<tr>
+							<td>{{{$account->accounttype->name}}}</td>
+							<td>{{{$account->store->name}}}</td>
+							<td>{{{$account->accountname}}}</td>
+							<td>{{{$account->discription}}}</td>
+							<td><b class="glyphicon glyphicon-usd"></b>{{{$account->balance}}}</td>
+							<td> 
+							@if($account->active)
+							<b class="glyphicon glyphicon-ok" style="color:green"></b> 
+							@else 
+							<b class="glyphicon glyphicon-remove" style="color:red"></b></td>
+							@endif
+							<td><button class="btn-link modal_account_btn" data-toggle="modal" data-id="{{{$account->id}}}" data-action="edit"><b class="glyphicon glyphicon-pencil"></b></button><button class="btn-link btn-danger modal_account_btn" data-toggle="modal" data-id="{{{$account->id}}}" data-action="delete"><b class="glyphicon glyphicon-trash" style="color:red"></b></button></td>
+						</tr>
+						@endif
+					@endforeach			
+				</tbody>
+			</table>
+			@else
+				<p>Please add an account type</p>
+			@endif
+		@if(!$user->accounts->count())
+		<p>I See you don't have any accounts please click on the manage accounts button <b class="glyphicon glyphicon-arrow-up"> </b>.</p>
+		@endif
+	</div>
+</div>
+<div class="panel panel-default" style="padding-left: 5px;float: left; margin: 15px; min-width: 100px; min-height: 100px">
+	<div class="panel-header">
+	<h2 style="float: left">Budgets</h2>
+	@if($hasaccounttypes)
+		<button id="addaccount" class="btn btn-primary btn-link pull-right modal_account_btn" data-toggle="modal" data-id="-1" data-action="addaccount"><b class="glyphicon glyphicon-plus"></b>Add budget</button>
+	@endif
+	</div>
+	<hr style="clear: both"/>
+	<div class="panel-body">
+			@if($hasaccounttypes)
+			<table class="table table-hover ">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Budget name</th>
+						<th>Description</th>
+						<th>Limit</th>
 						<th>Amount against</th>
 						<th>Active</th>
 						<th>Options</th>
@@ -63,9 +113,9 @@ $('.currency').blur(function(){
 				</thead>
 				<tbody>
 					@foreach($user->accounts as $account)
+						@if($account->accounttype->isbudget)
 						<tr>
 							<td>{{{$account->accounttype->name}}}</td>
-							<td>{{{$account->store->name}}}</td>
 							<td>{{{$account->accountname}}}</td>
 							<td>{{{$account->discription}}}</td>
 							<td><b class="glyphicon glyphicon-usd"></b>{{{$account->balance}}}</td>
@@ -78,6 +128,7 @@ $('.currency').blur(function(){
 							@endif
 							<td><button class="btn-link modal_account_btn" data-toggle="modal" data-id="{{{$account->id}}}" data-action="edit"><b class="glyphicon glyphicon-pencil"></b></button><button class="btn-link btn-danger modal_account_btn" data-toggle="modal" data-id="{{{$account->id}}}" data-action="delete"><b class="glyphicon glyphicon-trash" style="color:red"></b></button></td>
 						</tr>
+						@endif
 					@endforeach			
 				</tbody>
 			</table>

@@ -6,7 +6,7 @@
 	class Transactions extends Eloquent
 	{
 		
-		protected $fillable = array('user_id','trans_type_id','store_id','date','accounts_id','amount','posted','dateposted');
+		protected $fillable = array('user_id','trans_type_id','store_id','discription','date','accounts_id','amount','posted','dateposted');
 		public $timestamps = false;
 		protected $table = "transactions";
 

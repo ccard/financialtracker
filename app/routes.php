@@ -72,6 +72,8 @@ Route::group(array('before'=>'auth'), function(){
 
 	Route::get('home/accounts/addaccount','UserAccountfunctions@loadAddAccount');
 
+	Route::get('home/accounts/addbudget','UserAccountfunctions@loadAddBudget');
+
 	Route::post('home/accounts/addaccount','UserAccountfunctions@addAccount');
 
 	Route::get('home/accounts/{action}/{id}','UserAccountfunctions@loadEditDeleteAccount');
@@ -80,6 +82,6 @@ Route::group(array('before'=>'auth'), function(){
 
 	Route::get('home/transactions','Transactionfunctions@loadPage');
 
-	Route::get('home/transactions/add/{style}','Transactionfunctions@loadAddTrans');
+	Route::get('home/transactions/addtransaction','Transactionfunctions@loadAddTrans');
 
 });

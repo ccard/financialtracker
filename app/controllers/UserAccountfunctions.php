@@ -18,7 +18,7 @@ class UserAccountfunctions extends BaseController {
 		$accounttypes = AccountType::all();
 		$hasaccounttypes = count($accounttypes);
 
-		$user = User::where('id',Auth::user()->id)->first();
+		$user = Auth::user();
 		return View::make('PrimaryPages.accounts')->with('hasaccounttypes',$hasaccounttypes)->with('user',$user);
 	}
 
@@ -43,7 +43,16 @@ class UserAccountfunctions extends BaseController {
 
 	public function loadAddAccount()
 	{
-		$actypes = AccountType::all();
+		$actypes = AccountType::where('isbudget',false)->get();
+		$actypeoptions = array_combine($actypes->lists('id'), $actypes->lists('name'));
+		$stores = Store::all();
+		$storeoptions = array_combine($stores->lists('id'), $stores->lists('name'));
+		return View::make('Modals.addaccount')->with('actypeoptions',$actypeoptions)->with('storeoptions',$storeoptions)->render();
+	}
+
+	public function loadAddBudget()
+	{
+		$actypes = AccountType::where('isbudget',true)->get();
 		$actypeoptions = array_combine($actypes->lists('id'), $actypes->lists('name'));
 		$stores = Store::all();
 		$storeoptions = array_combine($stores->lists('id'), $stores->lists('name'));
@@ -57,7 +66,7 @@ class UserAccountfunctions extends BaseController {
 		}
 
 		try {
-			$usr = User::where('id',Auth::user()->id)->first();
+			$usr = Auth::user();
 			$actype = AccountType::find(intval(Input::get('accounttype_id')));
 			$account = new Accounts;
 			$account->accountType()->associate($actype);
@@ -163,8 +172,9 @@ class UserAccountfunctions extends BaseController {
 				$trans->posted = true;
 				$trans->dateposted = date("Y-m-d H:i:s");
 				$trans->accounts()->associate($account);
-				$user = User::where('id',Auth::user()->id)->first();
+				$user = Auth::user();
 				$trans->user()->associate($user);
+				$trans->discription = 'Account Balance Adjusted';
 				if($account->balance < $balance){
 					$type = TransType::where('name','Deposite')->first();
 					$trans->transType()->associate($type);

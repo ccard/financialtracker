@@ -30,6 +30,7 @@ $('.modal_trans_btn').on('click',function(){
 $('.currency').blur(function(){
 	$('.currency').formatCurrency();
 });
+
 @stop
 @section('navbaritems')
 	@if(Auth::check())
@@ -48,7 +49,7 @@ $('.currency').blur(function(){
 	</div>
 	<hr style="clear: both"/>
 	<div class="panel-body">
-			@if($hasaccounttypes)
+			@if($hastranstypes)
 			<table class="table table-hover ">
 				<thead>
 					<tr>
@@ -66,21 +67,28 @@ $('.currency').blur(function(){
 				<tbody>
 					@foreach($user->transactions as $trans)
 						<tr>
+							<td>{{{$trans->date}}}</td>
 							<td>{{{$trans->transtype->name}}}</td>
 							<td>{{{$trans->store->name}}}</td>
-							<td>{{{$trans->date}}}</td>
-							<td>{{{$trans->accounts->name}}}</td>
-							<td>{{{$at->discription}}}</td>
-							<td><b class="glyphicon glyphicon-usd"></b>{{{$account->balance}}}</td>
-							<td> 
-							@if($account->active)
+							<td>{{{$trans->discription}}}</td>
+							<td>{{{$trans->accounts->accountname}}}</td>
+							@if($trans->transtype->is_credit)
+							<td style="color:green">+<b class="glyphicon glyphicon-usd"></b>{{{$trans->amount}}}</td>
+							@else
+							<td style="color:red">-<b class="glyphicon glyphicon-usd"></b>{{{$trans->amount}}}</td>
+							@endif
+							<td>
+							@if($trans->posted)
 							<b class="glyphicon glyphicon-ok" style="color:green"></b> 
 							@else 
 							<b class="glyphicon glyphicon-remove" style="color:red"></b></td>
+							@endif 
+							</td>
+							<td>{{{$trans->dateposted}}}</td>
+							@if(!$trans->posted)
+							<td><button class="btn-link modal_trans_btn" data-toggle="modal" data-id="{{{$trans->id}}}" data-action="edit"><b class="glyphicon glyphicon-pencil"></b></button><button class="btn-link btn-danger modal_account_btn" data-toggle="modal" data-id="{{{$account->id}}}" data-action="delete"><b class="glyphicon glyphicon-trash" style="color:red"></b></button></td>
 							@endif
-							<td><button class="btn-link modal_account_btn" data-toggle="modal" data-id="{{{$account->id}}}" data-action="edit"><b class="glyphicon glyphicon-pencil"></b></button><button class="btn-link btn-danger modal_account_btn" data-toggle="modal" data-id="{{{$account->id}}}" data-action="delete"><b class="glyphicon glyphicon-trash" style="color:red"></b></button></td>
 						</tr>
-						@endif
 					@endforeach			
 				</tbody>
 			</table>

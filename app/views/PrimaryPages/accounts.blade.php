@@ -93,7 +93,7 @@ $('.currency').blur(function(){
 	<div class="panel-header">
 	<h2 style="float: left">Budgets</h2>
 	@if($hasaccounttypes)
-		<button id="addaccount" class="btn btn-primary btn-link pull-right modal_account_btn" data-toggle="modal" data-id="-1" data-action="addaccount"><b class="glyphicon glyphicon-plus"></b>Add budget</button>
+		<button id="addaccount" class="btn btn-primary btn-link pull-right modal_account_btn" data-toggle="modal" data-id="-1" data-action="addbudget"><b class="glyphicon glyphicon-plus"></b>Add budget</button>
 	@endif
 	</div>
 	<hr style="clear: both"/>

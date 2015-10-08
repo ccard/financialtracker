@@ -55,6 +55,7 @@ class AddUsersAndTranstypeAndTransactionsAndStoreAndPrivilagesAndAccounttypeAndA
 			$table->index('user_id');
 			$table->integer('trans_type_id');
 			$table->integer('store_id');
+			$table->string('discription');
 			$table->dateTime('date')->default(DB::raw('CURRENT_TIMESTAMP'));
 			$table->integer('accounts_id');
 			$table->index('accounts_id');

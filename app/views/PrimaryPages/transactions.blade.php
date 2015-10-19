@@ -1,4 +1,8 @@
 @extends('master')
+@section('addheaddata')
+<script type="text/javascript" src="{{ url('http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js') }}"></script>
+<script src="{{ url('http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+@stop
 @section('script')
 $('.modal_trans_btn').on('click',function(){
 	var this_id = $(this).attr('data-id');
@@ -10,6 +14,10 @@ $('.modal_trans_btn').on('click',function(){
 			$('#modalwindow').modal();
 			$('#modalwindow').on('shown.bs.modal', function(){
 				$('#modalwindow .load_modal').html(data);
+				$('#datetimepicker1').datetimepicker({
+					format: 'YYYY-MM-DD HH:mm:ss',
+					pick12HourFormat: false
+				});
 			});
 			$('#modalwindow').on('hidden.bs.modal',function(){
 				$('#modalwindow .load_modal').html('');

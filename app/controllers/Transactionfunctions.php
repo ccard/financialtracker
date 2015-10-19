@@ -39,4 +39,31 @@ class Transactionfunctions extends BaseController {
 											  ->with('storeoptions',$storeoptions)->render();
 	}
 
+	public function addTransaction()
+	{
+		if(!is_numeric(Input::get('amount'))) {
+			return Redirect::back()->with('error',"The balance must be a number");
+		}
+
+		try{
+			$usr = Auth::user();
+			$ttype = TransType::where('id',Input::get('transtype_id'))->first();
+			$account = Accounts::where('id',Input::get('acount_id'))->first();
+			$store = Store::where('id', Input::get('store_id'))->first();
+			$budget = null;
+			if(Input::get('counttobudget') === 'true'){
+				$budget = Accounts::where('id', Input::get('budget_id'))->first();
+			}
+			$trans = new Transactions;
+			$trans->user()->associate($user);
+			$trans->accounts()->associate($account);
+			$trans->transType()->associate($ttype);
+			$trans->store()->associate($store);
+			$trans->discription = Input::get('discription');
+			$trans->amount = doubleval(Input::get('amount'));
+		} catch (Exception $e) {
+			dd('Failed to create! '.$e->getMessage());
+		}
+	}
+
 }

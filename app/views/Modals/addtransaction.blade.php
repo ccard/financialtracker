@@ -3,13 +3,6 @@
 Add Transaction
 @stop
 @section('modalbodyfooter')
-<script type="text/javascript">
-$(function() {
-  $('#datetimepicker1').datepicker({
-    language: 'pt-BR'
-  });
-});
-</script>
 {{ Form::open(array('method'=>'post', 'url'=>'home/transactions/addtransaction')) }}
 <div class="modal-body" style="max-height: 75%">
 	<div class="content form-horizontal">
@@ -54,9 +47,9 @@ $(function() {
 		</div>
 		<div class="form-group">
 			{{ Form::label('Date',null,array("class"=>"control-label col-sm-3")) }}
-			<div class="col-sm-7 input-append date" id="datetimepicker1">
-				{{ Form::text('date',null,array("class"=>"form-control",'data-format'=>'dd/MM/yyyy hh:mm:ss',0=>'required')) }}
-				<span class="add-on"><i data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
+			<div class="col-sm-7 input-group date" id="datetimepicker1">
+			{{ Form::text('date', null,array("id"=>"date" ,"class"=>"form-control","style"=>"z-index: 100", "data-format"=>'dd/MM/yyyy hh:mm:ss',0=>"required")) }}
+				<span class="input-group-addon" style="min-width: 40px"><i class="glyphicon glyphicon-calendar"></i></span>
 			</div>
 		</div>
 	</div>

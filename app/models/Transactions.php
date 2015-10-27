@@ -6,7 +6,7 @@
 	class Transactions extends Eloquent
 	{
 		
-		protected $fillable = array('user_id','trans_type_id','store_id','discription','date','accounts_id','amount','posted','dateposted');
+		protected $fillable = array('user_id','trans_type_id','store_id','discription','date','accounts_id','budget_id','amount','posted','dateposted');
 		public $timestamps = false;
 		protected $table = "transactions";
 
@@ -23,6 +23,10 @@
 		}
 
 		public function accounts(){
+			return $this->belongsTo('Accounts');
+		}
+
+		public function budget() {
 			return $this->belongsTo('Accounts');
 		}
 	}

@@ -58,6 +58,7 @@ class AddUsersAndTranstypeAndTransactionsAndStoreAndPrivilagesAndAccounttypeAndA
 			$table->string('discription');
 			$table->dateTime('date')->default(DB::raw('CURRENT_TIMESTAMP'));
 			$table->integer('accounts_id');
+			$table->integer('budget_id')->nullable();
 			$table->index('accounts_id');
 			$table->double('amount',20,2);
 			$table->boolean('posted')->default(false);

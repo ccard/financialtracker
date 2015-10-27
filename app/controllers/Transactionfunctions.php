@@ -48,19 +48,29 @@ class Transactionfunctions extends BaseController {
 		try{
 			$usr = Auth::user();
 			$ttype = TransType::where('id',Input::get('transtype_id'))->first();
-			$account = Accounts::where('id',Input::get('acount_id'))->first();
+			$account = Accounts::where('id',Input::get('account_id'))->first();
 			$store = Store::where('id', Input::get('store_id'))->first();
 			$budget = null;
 			if(Input::get('counttobudget') === 'true'){
 				$budget = Accounts::where('id', Input::get('budget_id'))->first();
 			}
 			$trans = new Transactions;
-			$trans->user()->associate($user);
+			$trans->user()->associate($usr);
 			$trans->accounts()->associate($account);
 			$trans->transType()->associate($ttype);
 			$trans->store()->associate($store);
 			$trans->discription = Input::get('discription');
 			$trans->amount = doubleval(Input::get('amount'));
+			if(Input::get('counttobudget') === 'true'){
+				$trans->budget()->associate($budget);
+			}
+			$trans->date = Input::get('date');
+
+			if($trans->save()) {
+				return Redirect::back()->with('message','Transaction created!');
+			} else {
+				return Redirect::back()->with('error', 'Failed to create transaction!');
+			}
 		} catch (Exception $e) {
 			dd('Failed to create! '.$e->getMessage());
 		}

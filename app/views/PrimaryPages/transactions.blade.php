@@ -23,6 +23,20 @@ $('.modal_trans_btn').on('click',function(){
 				$('#modalwindow .load_modal').html('');
 			});
 		});
+	} else if (this_action === 'edit') {
+		$.get("{{{ $_SERVER['REQUEST_URI']}}}"+'/'+this_action+'/'+this_id, function(data){
+			$('#modalwindow').modal();
+			$('#modalwindow').on('shown.bs.modal', function(){
+				$('#modalwindow .load_modal').html(data);
+				$('#datetimepicker1').datetimepicker({
+					format: 'YYYY-MM-DD HH:mm:ss',
+					pick12HourFormat: false
+				});
+			});
+			$('#modalwindow').on('hidden.bs.modal',function(){
+				$('#modalwindow .load_modal').html('');
+			});
+		});
 	} else {
 		$.get("{{{ $_SERVER['REQUEST_URI']}}}"+'/'+this_action+'/'+this_id, function(data){
 			$('#modalwindow').modal();
@@ -66,6 +80,7 @@ $('.currency').blur(function(){
 						<th>Store</th>
 						<th>Discription
 						<th>Account</th>
+						<th>Budget</th>
 						<th>Ammount</th>
 						<th>Posted</th>
 						<th>Date Posted</th>
@@ -80,6 +95,11 @@ $('.currency').blur(function(){
 							<td>{{{$trans->store->name}}}</td>
 							<td>{{{$trans->discription}}}</td>
 							<td>{{{$trans->accounts->accountname}}}</td>
+							@if($trans->budget)
+							<td>{{{$trans->budget->accountname}}}</td>
+							@else
+							<td>No Budget</td>
+							@endif
 							@if($trans->transtype->is_credit)
 							<td style="color:green">+<b class="glyphicon glyphicon-usd"></b>{{{$trans->amount}}}</td>
 							@else
@@ -94,7 +114,7 @@ $('.currency').blur(function(){
 							</td>
 							<td>{{{$trans->dateposted}}}</td>
 							@if(!$trans->posted)
-							<td><button class="btn-link modal_trans_btn" data-toggle="modal" data-id="{{{$trans->id}}}" data-action="edit"><b class="glyphicon glyphicon-pencil"></b></button><button class="btn-link btn-danger modal_account_btn" data-toggle="modal" data-id="{{{$account->id}}}" data-action="delete"><b class="glyphicon glyphicon-trash" style="color:red"></b></button></td>
+							<td><button class="btn-link modal_trans_btn" data-toggle="modal" data-id="{{{$trans->id}}}" data-action="edit"><b class="glyphicon glyphicon-pencil"></b></button><button class="btn-link btn-danger modal_trans_btn" data-toggle="modal" data-id="{{{$trans->id}}}" data-action="delete"><b class="glyphicon glyphicon-trash" style="color:red"></b></button></td>
 							@endif
 						</tr>
 					@endforeach			

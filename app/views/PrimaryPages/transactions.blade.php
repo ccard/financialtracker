@@ -7,9 +7,8 @@
 $('.modal_trans_btn').on('click',function(){
 	var this_id = $(this).attr('data-id');
 	var this_action = $(this).attr('data-action');
-	
+	console.log("{{{ $_SERVER['REQUEST_URI']}}}"+'/'+this_action+'/'+this_id);
 	if(this_id == '-1'){
-	console.log("{{{ $_SERVER['REQUEST_URI']}}}"+'/'+this_action);
 		$.get("{{{ $_SERVER['REQUEST_URI']}}}"+'/'+this_action, function(data){
 			$('#modalwindow').modal();
 			$('#modalwindow').on('shown.bs.modal', function(){
@@ -114,7 +113,7 @@ $('.currency').blur(function(){
 							</td>
 							<td>{{{$trans->dateposted}}}</td>
 							@if(!$trans->posted)
-							<td><button class="btn-link modal_trans_btn" data-toggle="modal" data-id="{{{$trans->id}}}" data-action="edit"><b class="glyphicon glyphicon-pencil"></b></button><button class="btn-link btn-danger modal_trans_btn" data-toggle="modal" data-id="{{{$trans->id}}}" data-action="delete"><b class="glyphicon glyphicon-trash" style="color:red"></b></button></td>
+							<td><button class="btn-link modal_trans_btn" data-toggle="modal" data-id="{{{$trans->id}}}" data-action="postone"><b style="color:green" class="glyphicon glyphicon-ok-sign"></b></button><button class="btn-link modal_trans_btn" data-toggle="modal" data-id="{{{$trans->id}}}" data-action="edit"><b class="glyphicon glyphicon-pencil"></b></button><button class="btn-link btn-danger modal_trans_btn" data-toggle="modal" data-id="{{{$trans->id}}}" data-action="delete"><b class="glyphicon glyphicon-trash" style="color:red"></b></button></td>
 							@endif
 						</tr>
 					@endforeach			

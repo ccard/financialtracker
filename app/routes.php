@@ -86,6 +86,6 @@ Route::group(array('before'=>'auth'), function(){
 	Route::post('home/transactions/addtransaction','Transactionfunctions@addTransaction');
 
 	Route::get('home/transactions/{action}/{id}','Transactionfunctions@loadPostEditDeleteTransaction');
-	Route::post('home/transactions/{action}/{id}','Transactionfunctions@loadPostEditDeleteTransaction');
+	Route::post('home/transactions/{action}/{id}','Transactionfunctions@postEditDeleteTransaction');
 
 });

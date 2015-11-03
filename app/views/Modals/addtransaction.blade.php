@@ -21,13 +21,13 @@ Add Transaction
 		<div class="form-group">
 			{{ Form::label('Account',null,array("class"=>"control-label col-sm-3")) }}
 			<div class="col-sm-7">
-				{{ Form::select('account_id',$accountoptions,Input::old('account_id'),array("class"=>"form-control",0=>'required'))}}
+				{{ Form::select('account_id',$accountoptions,null,array("class"=>"form-control",0=>'required'))}}
 			</div>
 		</div>
 		<div class="form-group">
 			{{ Form::label('Budget',null,array("class"=>"control-label col-sm-3")) }}
 			<div class="col-sm-5">
-				{{ Form::select('budget_id',$budgetoptions,Input::old('budget_id'),array("class"=>"form-control",0=>'required'))}}
+				{{ Form::select('budget_id',$budgetoptions,null,array("class"=>"form-control",0=>'required'))}}
 			</div>
 			
 			{{Form::checkbox('counttobudget','true',false)}}{{Form::label('Count tawords budget.',null,array("class"=>"control-label","style"=>"margin-left: 3px"))}}

@@ -3,7 +3,7 @@
 Post Transaction: "{{{$trans->discription}}}"
 @stop
 @section('modalbodyfooter')
-{{ Form::open(array('method'=>'post', 'url'=>'home/transactions/post/'.$trans->id)) }}
+{{ Form::open(array('method'=>'post', 'url'=>'home/transactions/postone/'.$trans->id)) }}
 <div class="modal-body" style="max-height: 75%">
 	<div class="content form-horizontal">
 		<div class="alert alert-warning">

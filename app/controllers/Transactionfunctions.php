@@ -27,10 +27,10 @@ class Transactionfunctions extends BaseController {
 		$stores = Store::all();
 		$storeoptions = array_combine($stores->lists('id'), $stores->lists('name'));
 
-		$accounts = Auth::user()->accounts()->join('accounttype','accounttype.id','=','accounts.account_type_id')->where('accounttype.isbudget',false)->get();
+		$accounts = Auth::user()->accounts()->join('accounttype','accounttype.id','=','accounts.account_type_id')->where('accounttype.isbudget',false)->get(['accounts.*']);
 		$accountoptions = array_combine($accounts->lists('id'), $accounts->lists('accountname'));
 
-		$budgets = Auth::user()->accounts()->join('accounttype','accounttype.id','=','accounts.account_type_id')->where('accounttype.isbudget',true)->get();
+		$budgets = Auth::user()->accounts()->join('accounttype','accounttype.id','=','accounts.account_type_id')->where('accounttype.isbudget',true)->get(['accounts.*']);
 		$budgetoptions = array_combine($budgets->lists('id'), $budgets->lists('accountname'));
 		
 		return View::make('Modals.addtransaction')->with('accountoptions',$accountoptions)
@@ -89,10 +89,10 @@ class Transactionfunctions extends BaseController {
 			$stores = Store::all();
 			$storeoptions = array_combine($stores->lists('id'), $stores->lists('name'));
 
-			$accounts = Auth::user()->accounts()->join('accounttype','accounttype.id','=','accounts.account_type_id')->where('accounttype.isbudget',false)->get();
+			$accounts = Auth::user()->accounts()->join('accounttype','accounttype.id','=','accounts.account_type_id')->where('accounttype.isbudget',false)->get(['accounts.*']);
 			$accountoptions = array_combine($accounts->lists('id'), $accounts->lists('accountname'));
 
-			$budgets = Auth::user()->accounts()->join('accounttype','accounttype.id','=','accounts.account_type_id')->where('accounttype.isbudget',true)->get();
+			$budgets = Auth::user()->accounts()->join('accounttype','accounttype.id','=','accounts.account_type_id')->where('accounttype.isbudget',true)->get(['accounts.*']);
 			$budgetoptions = array_combine($budgets->lists('id'), $budgets->lists('accountname'));
 
 			$trans = Transactions::where('id',$id2)->first();
@@ -106,6 +106,124 @@ class Transactionfunctions extends BaseController {
 		} else if($action == 'postone') {
 			$trans = Transactions::where('id',$id2)->first();
 			return View::make('Modals.postonetransaction')->with('trans',$trans)->render();
+		}
+	}
+
+	public function postEditDeleteTransaction($action, $id)
+	{
+		$id2 = intval($id);
+
+		if($action == 'delete') {
+			$trans = Transactions::find($id2);
+			if($trans->delete()){
+				return Redirect::back()->with('message','Transaction deleted');
+			} else {
+				return Redirect::back()->with('error','Transaction was not deleted!');
+			}
+		} else if ($action == 'edit') {
+			if(!is_numeric(Input::get('amount'))) {
+				return Redirect::back()->with('error',"The balance must be a number");
+			}
+
+			$message = "Updtating: ";
+			$trans = Transactions::find($id2);
+
+			if(!$trans->budget_id && Input::get('counttobudget') == 'true'){
+				$budget = Accounts::where('id',Input::get('budget_id'))->first();
+				$trans->budget()->associate($budget);
+				$message .= "Budget, ";
+			} else if ($trans->budget_id && $trans->budget_id != intval(Input::get('budget_id'))) {
+				$budget = Accounts::where('id',Input::get('budget_id'))->first();
+				$trans->budget()->associate($budget);
+				$message .= "Budget, ";
+			} else if ($trans->budget_id && Input::get('counttobudget') != 'true') {
+				$trans->budget()->detach($trans->budget_id);
+				$message .= "Budget, ";
+			}
+
+			if($trans->trans_type_id != intval(Input::get('transtype_id'))) {
+				$transtype = TransType::where('id',Input::get('transtype_id'))->first();
+				$trans->transType()->associate($transtype);
+				$message .= "Transtype, ";
+			}
+
+			if($trans->store_id != intval(Input::get('store_id'))) {
+				$store = Store::where('id',Input::get('store_id'))->first();
+				$trans->store()->associate($store);
+				$message .= "Store, ";
+			}
+
+			if($trans->discription != Input::get('discription')){
+				$trans->discription = Input::get('discription');
+				$message .= "Discription, ";
+			}
+
+			if($trans->accounts_id != intval(Input::get('account_id'))) {
+				$account = Accounts::where('id',Input::get('account_id'))->first();
+				$trans->accounts()->associate($account);
+				$message .= "Account, ";
+			}
+
+			if($trans->date != Input::get('date')) {
+				$trans->date = Input::get('date');
+				$message .= "Date, ";
+			}
+
+			if($trans->amount != doubleval(Input::get('amount'))) {
+				$trans->amount = doubleval(Input::get('amount'));
+				$message .= "Amount, ";
+			}
+
+			if($trans->save()) {
+				return Redirect::back()->with('message','Success '.$message);
+			} else {
+				return Redirect::back()->with('error', 'Failed '.$message);
+			}
+		} else if ($action == 'postone') {
+			$trans = Transactions::find($id2);
+			$account = $trans->accounts;
+			$message = "";
+			$error = "";
+			if($trans->transType->is_credit){
+				$account->balance = $account->balance + $trans->amount;
+			} else {
+				$account->balance = $account->balance - $trans->amount;
+			}
+			if($account->save()){
+				$message .= "Posted to account";
+			} else {
+				$error .= "Failed to post to account";
+			}
+
+			if($trans->budget_id) {
+				$budget = $trans->budget;
+				if($trans->transType->is_credit){
+					$budget->amountagainst = $budget->amountagainst - $trans->amount;
+				} else {
+					$budget->amountagainst = $budget->amountagainst + $trans->amount;
+				}
+
+				if($budget->save()) {
+					$message .= " Posted to budget";
+				} else {
+					$error .= " Failed to post to budget";
+				}
+			}
+
+			$trans->posted = true;
+			$trans->dateposted = date("Y-m-d H:i:s");
+
+			if($trans->save()) {
+				$message .= " Trans posted";
+			} else {
+				$error .= " Failed to po1st";
+			}
+
+			if(strlen($error)){
+				return Redirect::back()->with('error',$error)->with('message',$message);
+			}
+
+			return Redirect::back()->with('message',$message);
 		}
 	}
 }

@@ -77,7 +77,7 @@ $('.currency').blur(function(){
 						<th>Date</th>
 						<th>Type</th>
 						<th>Store</th>
-						<th>Discription
+						<th>Discription</th>
 						<th>Account</th>
 						<th>Budget</th>
 						<th>Ammount</th>

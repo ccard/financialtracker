@@ -88,4 +88,10 @@ Route::group(array('before'=>'auth'), function(){
 	Route::get('home/transactions/{action}/{id}','Transactionfunctions@loadPostEditDeleteTransaction');
 	Route::post('home/transactions/{action}/{id}','Transactionfunctions@postEditDeleteTransaction');
 
+	Route::get('home/transactions/addstore','Transactionfunctions@loadAddStore');
+	Route::post('home/transactions/addstore','Transactionfunctions@addStore');
+
+	Route::get('home/transactions/addtranstype','Transactionfunctions@loadAddTransType');
+	Route::post('home/transactions/addtranstype','Transactionfunctions@addTransType');
+
 });

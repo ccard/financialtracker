@@ -226,4 +226,40 @@ class Transactionfunctions extends BaseController {
 			return Redirect::back()->with('message',$message);
 		}
 	}
+
+	public function loadAddStore()
+	{
+		return View::make('Modals.addstore')->render();
+	}
+
+	public function addStore()
+	{
+		$store = new Store;
+		$store->name = Input::get('storename');
+		$store->description = Input::get('storedescription');
+
+		if ($store->save()) {
+			return Redirect::back()->with('message', 'Store was created!');
+		} else {
+			return Redirect::back()->with('error', 'Failed to create store!');
+		}
+	}
+
+	public function loadAddTransType()
+	{
+		return View::make('Modals.addtranstype')->render();
+	}
+
+	public function addTransType()
+	{
+		$transtype = new TransType;
+		$transtype->name = Input::get('transtype');
+		$transtype->is_credit = (Input::get('iscredit') == 'true' ? true:false);
+
+		if ($transtype->save()) {
+			return Redirect::back()->with('message', 'TransType was created!');
+		} else {
+			return Redirect::back()->with('error', 'Failed to create transtype!');
+		}
+	}
 }

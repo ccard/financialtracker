@@ -60,9 +60,13 @@ Route::group(array('before'=>'auth'), function(){
 
 	Route::post('home/admin/user/{action}/{id}','Adminfunctions@editDeleteUser');
 
-	Route::get('home/user/settings',function(){
+	Route::get('home/user/settings','AccountInfo@loadPage');
 
-	});
+	Route::get('home/user/settings/{action}','AccountInfo@loadEdit');
+
+	Route::post('home/user/settings/editpassword','AccountInfo@editPassword');
+	Route::post('home/user/settings/editusername','AccountInfo@editusername');
+	Route::post('home/user/settings/edituserfullname','AccountInfo@edituserfullname');
 
 	Route::get('home/accounts','UserAccountfunctions@loadPage');
 

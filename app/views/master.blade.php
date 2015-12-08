@@ -2,8 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Tracker</title>
-		<link rel="shortcut icon" href="{{{ url('http://test.xcesssoft.com/wp-content/uploads/2014/09/e-commerce.png') }}}">
+		<title>Tracker @yield('pagetitle')</title>
+		<link rel="shortcut icon" href="{{{ asset('Layer_5-01-512.png') }}}">
 		<link rel="stylesheet" href="{{{ url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css') }}}">
 		<script type="text/javascript" src="{{ asset('jquery-2.1.1.min.js') }}"></script>
 		<script src="{{ url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js') }}"></script>
@@ -50,7 +50,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="{{{ url('home') }}}"><img alt="Brand" src="{{{ url('http://test.xcesssoft.com/wp-content/uploads/2014/09/e-commerce.png') }}}" style="width: 28px; height: 28px"></a>
+						<a class="navbar-brand" href="{{{ url('home') }}}"><img alt="Brand" src="{{{ asset('Layer_5-01-512.png') }}}" style="width: 28px; height: 28px"></a>
 					</div>
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -62,7 +62,7 @@
 							@else
 							<li><a href="{{{ url('home/accounts') }}}"><b class="glyphicon glyphicon-briefcase"></b> Accounts</a></li>
 							<li><a href="{{{ url('home/transactions') }}}"><b class="glyphicon glyphicon-shopping-cart"></b> Transactions</a></li>
-							<li><a href="#"><b class="glyphicon glyphicon-menu-hamburger"></b></a></li>
+							<li><a href="{{{ url('home/user/settings') }}}"><b class="glyphicon glyphicon-cog"></b> Settings</a></li>
 							<li><a href="#"><b class="glyphicon glyphicon-menu-hamburger"></b></a></li>
 							@endif
 							@yield('addmenueitems')

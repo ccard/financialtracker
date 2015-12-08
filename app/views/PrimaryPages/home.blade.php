@@ -1,4 +1,7 @@
 @extends('master')
+@section('pagetitle')
+Home
+@stop
 @section('addheaddata')
 @if(Auth::check())
 <script type="text/javascript" src="{{ url('http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js') }}"></script>

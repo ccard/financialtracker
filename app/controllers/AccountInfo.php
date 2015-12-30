@@ -43,7 +43,13 @@ class AccountInfo extends BaseController {
 			}
 
 			$user->password = Hash::make($new_pass);
-			return Redirect::back()->with('message', 'Your password has been updated');
+
+			if ($user->save())
+			{
+				return Redirect::back()->with('message', 'Your password has been updated');
+			} else {
+				return Redirect::back()->with('error', 'Your password has not been updated');
+			}
 		} else {
 			return Redirect::back()->with('error', 'Failed to varerify password');
 		}
